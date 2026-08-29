@@ -1,0 +1,74 @@
+# =========================================================
+# Ambiente Python
+# =========================================================
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.eggs/
+.venv/
+venv/
+env/
+.Python
+build/
+dist/
+
+# =========================================================
+# Segredos -- NUNCA versionar
+# =========================================================
+.env
+.env.*
+*.pem
+*.key
+secrets.json
+
+# =========================================================
+# Saidas geradas automaticamente pelo pipeline
+# =========================================================
+# (dados brutos baixados, CSVs intermediarios, PDFs/diagramas
+# regenerados a cada execucao -- versione so os exemplos que
+# forem colocados manualmente em docs/)
+output/
+raw/
+logs/
+docs_codigo/
+*.log
+dq_report.json
+resumo_execucao_ia.txt
+
+# Exceto os artefatos de exemplo mantidos propositalmente em docs/
+!docs/**
+
+# =========================================================
+# Dados brutos e temporarios
+# =========================================================
+*.csv
+*.zip
+*.xls
+*.xlsx
+!docs/**/*.csv
+
+# =========================================================
+# Spark
+# =========================================================
+_spark_tmp/
+spark-warehouse/
+metastore_db/
+derby.log
+
+# =========================================================
+# Power BI
+# =========================================================
+# .pbix costuma ser grande e binario -- versionar so se quiser
+# guardar o arquivo de verdade no repo (avalie o tamanho antes).
+*.pbix.bak
+~$*.pbix
+
+# =========================================================
+# Sistema operacional / editor
+# =========================================================
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.swp
