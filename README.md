@@ -155,7 +155,7 @@ O dashboard Power BI conecta na view materializada
 - Top 5 maiores concentrações de violações
 - Tendência de qualidade nas últimas execuções
 
-Prints em [`docs/dashboard/`](docs/dashboard/).
+![Dashboard de Governança](Dashboard.png)
 
 ## Decisões técnicas relevantes
 
