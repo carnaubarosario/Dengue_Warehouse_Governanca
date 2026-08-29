@@ -189,7 +189,7 @@ Prints em [`docs/dashboard/`](docs/dashboard/).
 
 ## Autor
 
-**Lucca** — Analista de BI, mestrando em Informática (PPGI) na UFAL.
+**Lucca Carnaúba Peixoto Rosário** — Analista de BI, mestrando em Informática (Análise, Gerência e Qualidade de Dados em Larga Escala) - Universidade Federal de Alagoas - UFAL.
 
 Projeto desenvolvido como peça de portfólio, com foco em
 demonstrar competências de Analytics Engineering / Data Engineering
