@@ -29,6 +29,8 @@ depois que o pipeline termina.
 
 ![Arquitetura do Pipeline](docs/arquitetura_pipeline.png)
 
+![Arquitetura do Pipeline](Output%20Script/output/arquitetura_pipeline.png)
+
 O fluxo segue 8 etapas, de fonte bruta a entrega final:
 
 1. **Extração** — download do SINAN (via `requests`) e do IBGE (via
