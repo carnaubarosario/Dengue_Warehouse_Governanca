@@ -1,0 +1,216 @@
+{
+  "bruto": {
+    "checks": [
+      {
+        "dimensao": "completude",
+        "coluna": "sg_uf",
+        "passou": true,
+        "detalhe": {
+          "taxa_preenchimento": 1.0,
+          "threshold": 0.9,
+          "linhas_nulas": 0,
+          "total_linhas": 16454345
+        }
+      },
+      {
+        "dimensao": "completude",
+        "coluna": "nu_ano",
+        "passou": true,
+        "detalhe": {
+          "taxa_preenchimento": 1.0,
+          "threshold": 0.9,
+          "linhas_nulas": 0,
+          "total_linhas": 16454345
+        }
+      },
+      {
+        "dimensao": "completude",
+        "coluna": "dt_notific",
+        "passou": true,
+        "detalhe": {
+          "taxa_preenchimento": 1.0,
+          "threshold": 0.8,
+          "linhas_nulas": 0,
+          "total_linhas": 16454345
+        }
+      },
+      {
+        "dimensao": "completude",
+        "coluna": "cs_sexo",
+        "passou": true,
+        "detalhe": {
+          "taxa_preenchimento": 1.0,
+          "threshold": 0.9,
+          "linhas_nulas": 68,
+          "total_linhas": 16454345
+        }
+      },
+      {
+        "dimensao": "validade_dominio",
+        "coluna": "sg_uf",
+        "passou": true,
+        "detalhe": {
+          "taxa_valida": 1.0,
+          "qtd_mal_digitados": 0,
+          "qtd_presentes": 16454345,
+          "exemplos_mal_digitados": []
+        }
+      },
+      {
+        "dimensao": "validade_dominio",
+        "coluna": "nu_ano",
+        "passou": true,
+        "detalhe": {
+          "taxa_valida": 1.0,
+          "qtd_mal_digitados": 0,
+          "qtd_presentes": 16454345,
+          "exemplos_mal_digitados": []
+        }
+      },
+      {
+        "dimensao": "validade_dominio",
+        "coluna": "ano_nasc",
+        "passou": false,
+        "detalhe": {
+          "taxa_valida": 0.8627,
+          "qtd_mal_digitados": 2249210,
+          "qtd_presentes": 16386049,
+          "exemplos_mal_digitados": [
+            "4081.0",
+            "4085.0",
+            "4093.0",
+            "30.0",
+            "1010.0"
+          ]
+        }
+      },
+      {
+        "dimensao": "validade_dominio",
+        "coluna": "cs_sexo",
+        "passou": true,
+        "detalhe": {
+          "taxa_valida": 1.0,
+          "qtd_mal_digitados": 0,
+          "qtd_presentes": 16454277,
+          "exemplos_mal_digitados": []
+        }
+      },
+      {
+        "dimensao": "validade_dominio",
+        "coluna": "evolucao",
+        "passou": false,
+        "detalhe": {
+          "taxa_valida": 0.9994,
+          "qtd_mal_digitados": 8531,
+          "qtd_presentes": 13923775,
+          "exemplos_mal_digitados": [
+            "4",
+            "3"
+          ]
+        }
+      },
+      {
+        "dimensao": "validade_dominio",
+        "coluna": "hospitaliz",
+        "passou": true,
+        "detalhe": {
+          "taxa_valida": 1.0,
+          "qtd_mal_digitados": 0,
+          "qtd_presentes": 12092809,
+          "exemplos_mal_digitados": []
+        }
+      },
+      {
+        "dimensao": "unicidade",
+        "coluna": "sg_uf, nu_ano, dt_notific, cs_sexo",
+        "passou": false,
+        "detalhe": {
+          "qtd_duplicatas": 16311057,
+          "total_linhas": 16454345
+        }
+      }
+    ]
+  },
+  "pre_carga": {
+    "checks": [
+      {
+        "dimensao": "completude",
+        "coluna": "sg_uf",
+        "passou": true,
+        "detalhe": {
+          "taxa_preenchimento": 1.0,
+          "threshold": 0.99,
+          "linhas_nulas": 0,
+          "total_linhas": 16454345
+        }
+      },
+      {
+        "dimensao": "completude",
+        "coluna": "nu_ano",
+        "passou": true,
+        "detalhe": {
+          "taxa_preenchimento": 1.0,
+          "threshold": 0.99,
+          "linhas_nulas": 0,
+          "total_linhas": 16454345
+        }
+      },
+      {
+        "dimensao": "completude",
+        "coluna": "dt_notific",
+        "passou": true,
+        "detalhe": {
+          "taxa_preenchimento": 1.0,
+          "threshold": 0.9,
+          "linhas_nulas": 0,
+          "total_linhas": 16454345
+        }
+      },
+      {
+        "dimensao": "validade_dominio",
+        "coluna": "sg_uf",
+        "passou": true,
+        "detalhe": {
+          "taxa_valida": 1.0,
+          "qtd_invalidos": 0,
+          "exemplos_invalidos": []
+        }
+      },
+      {
+        "dimensao": "validade_range",
+        "coluna": "nu_ano",
+        "passou": true,
+        "detalhe": {
+          "taxa_valida": 1.0,
+          "qtd_fora_do_range": 0,
+          "range_esperado": [
+            1900,
+            2027
+          ]
+        }
+      },
+      {
+        "dimensao": "validade_range",
+        "coluna": "ano_nasc",
+        "passou": true,
+        "detalhe": {
+          "taxa_valida": 1.0,
+          "qtd_fora_do_range": 0,
+          "range_esperado": [
+            1900,
+            2026
+          ]
+        }
+      },
+      {
+        "dimensao": "unicidade",
+        "coluna": "sg_uf, nu_ano, dt_notific, cs_sexo",
+        "passou": false,
+        "detalhe": {
+          "qtd_duplicatas": 16311057,
+          "total_linhas": 16454345
+        }
+      }
+    ]
+  }
+}

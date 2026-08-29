@@ -1,0 +1,101 @@
+-- =========================================================
+-- QUERY 1 -- SCORE GERAL DA ULTIMA EXECUCAO
+-- =========================================================
+-- Retorna: 1 linha com o score geral (0.0 a 1.0), total de checks
+-- e checks aprovados da execucao mais recente.
+ 
+WITH ultima_execucao AS (
+    SELECT MAX(timestamp_execucao) AS timestamp_execucao
+    FROM mv_governanca_qualidade
+)
+SELECT
+    ue.timestamp_execucao,
+    COUNT(*)                                   AS total_checks,
+    COUNT(*) FILTER (WHERE m.passou)           AS checks_aprovados,
+    ROUND(
+        100.0 * COUNT(*) FILTER (WHERE m.passou) / NULLIF(COUNT(*), 0),
+        1
+    )                                           AS score_geral_pct
+FROM mv_governanca_qualidade m
+CROSS JOIN ultima_execucao ue
+WHERE m.timestamp_execucao = ue.timestamp_execucao
+GROUP BY ue.timestamp_execucao;
+ 
+ 
+-- =========================================================
+-- QUERY 2 -- SCORE POR ETAPA (LINHAGEM: BRUTO -> PRE -> POS)
+-- =========================================================
+-- Mostra onde a qualidade melhora ao longo do pipeline.
+ 
+WITH ultima_execucao AS (
+    SELECT MAX(timestamp_execucao) AS timestamp_execucao
+    FROM mv_governanca_qualidade
+)
+SELECT
+    m.etapa,
+    CASE m.etapa
+        WHEN 'bruto'     THEN 1
+        WHEN 'pre_carga' THEN 2
+        WHEN 'pos_carga' THEN 3
+        ELSE 99
+    END                                         AS ordem_etapa,
+    COUNT(*)                                   AS total_checks,
+    COUNT(*) FILTER (WHERE m.passou)           AS checks_aprovados,
+    ROUND(
+        100.0 * COUNT(*) FILTER (WHERE m.passou) / NULLIF(COUNT(*), 0),
+        1
+    )                                           AS score_etapa_pct
+FROM mv_governanca_qualidade m
+CROSS JOIN ultima_execucao ue
+WHERE m.timestamp_execucao = ue.timestamp_execucao
+GROUP BY m.etapa
+ORDER BY ordem_etapa;
+ 
+ 
+-- =========================================================
+-- QUERY 3 -- SCORE POR DIMENSAO DE QUALIDADE
+-- =========================================================
+-- Responde: em qual TIPO de regra o dado falha mais?
+ 
+WITH ultima_execucao AS (
+    SELECT MAX(timestamp_execucao) AS timestamp_execucao
+    FROM mv_governanca_qualidade
+)
+SELECT
+    m.dimensao,
+    COUNT(*)                                   AS total_checks,
+    COUNT(*) FILTER (WHERE m.passou)           AS checks_aprovados,
+    SUM(m.qtd_violacoes)                       AS total_violacoes,
+    ROUND(
+        100.0 * COUNT(*) FILTER (WHERE m.passou) / NULLIF(COUNT(*), 0),
+        1
+    )                                           AS score_dimensao_pct
+FROM mv_governanca_qualidade m
+CROSS JOIN ultima_execucao ue
+WHERE m.timestamp_execucao = ue.timestamp_execucao
+GROUP BY m.dimensao
+ORDER BY score_dimensao_pct ASC;  -- pior dimensao primeiro
+ 
+ 
+-- =========================================================
+-- QUERY 4 -- TOP 5 MAIOR CONCENTRACAO DE PROBLEMAS (MAIOR OFENSOR)
+-- =========================================================
+ 
+WITH ultima_execucao AS (
+    SELECT MAX(timestamp_execucao) AS timestamp_execucao
+    FROM mv_governanca_qualidade
+)
+SELECT
+    m.tabela,
+    m.coluna,
+    m.etapa,
+    m.dimensao,
+    m.qtd_violacoes,
+    m.total_linhas,
+    ROUND(100.0 * m.qtd_violacoes / NULLIF(m.total_linhas, 0), 2) AS pct_linhas_afetadas
+FROM mv_governanca_qualidade m
+CROSS JOIN ultima_execucao ue
+WHERE m.timestamp_execucao = ue.timestamp_execucao
+  AND m.passou = FALSE
+ORDER BY m.qtd_violacoes DESC NULLS LAST
+LIMIT 5;

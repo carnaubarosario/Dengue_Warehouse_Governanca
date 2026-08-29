@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<title>Dashboard de Governanca - dengue_warehouse</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+  body { font-family: Arial, sans-serif; background:#f4f6f8; margin:0; padding:24px; color:#1f2937; }
+  h1 { margin-bottom:4px; }
+  .subtitulo { color:#6b7280; margin-bottom:24px; }
+  .cards { display:flex; gap:16px; margin-bottom:24px; flex-wrap:wrap; }
+  .card { background:white; border-radius:10px; padding:20px 28px; box-shadow:0 1px 3px rgba(0,0,0,.1); min-width:160px; }
+  .card .valor { font-size:32px; font-weight:bold; }
+  .card .rotulo { color:#6b7280; font-size:13px; text-transform:uppercase; }
+  .score-ok { color:#16a34a; }
+  .score-alerta { color:#d97706; }
+  .score-critico { color:#dc2626; }
+  .grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:24px; }
+  .painel { background:white; border-radius:10px; padding:16px; box-shadow:0 1px 3px rgba(0,0,0,.1); }
+  table { width:100%; border-collapse:collapse; background:white; border-radius:10px; overflow:hidden; }
+  th, td { text-align:left; padding:10px 12px; font-size:13px; border-bottom:1px solid #e5e7eb; }
+  th { background:#f9fafb; }
+  tr.falhou td:nth-child(5) { color:#dc2626; font-weight:bold; }
+  tr.ok td:nth-child(5) { color:#16a34a; font-weight:bold; }
+</style>
+</head>
+<body>
+  <h1>Dashboard de Governanca de Dados</h1>
+  <div class="subtitulo">dengue_warehouse &middot; execucao em 2026-08-27 17:33:27.700543</div>
+
+  <div class="cards">
+    <div class="card">
+      <div class="valor score-alerta">86.2%</div>
+      <div class="rotulo">Score geral de qualidade</div>
+    </div>
+    <div class="card">
+      <div class="valor">25/29</div>
+      <div class="rotulo">Checks aprovados</div>
+    </div>
+    <div class="card">
+      <div class="valor">4</div>
+      <div class="rotulo">Checks com violacao</div>
+    </div>
+  </div>
+
+  
+
+  <h2 style="margin-bottom:8px;">Evolucao da qualidade ao longo do pipeline</h2>
+  <div class="cards">
+    <div class="card">
+            <div class="valor score-alerta">72.7%</div>
+            <div class="rotulo">Bruto (SINAN)</div>
+        </div>
+<div class="card">
+            <div class="valor score-alerta">85.7%</div>
+            <div class="rotulo">Pre-carga (limpo)</div>
+        </div>
+<div class="card">
+            <div class="valor score-ok">100.0%</div>
+            <div class="rotulo">Pos-carga (DW)</div>
+        </div>
+  </div>
+
+  <div class="grid">
+    <div class="painel">
+      <canvas id="graficoEtapa"></canvas>
+    </div>
+    <div class="painel">
+      <canvas id="graficoDimensao"></canvas>
+    </div>
+  </div>
+
+  <div class="grid">
+    <div class="painel">
+      <canvas id="graficoStatus"></canvas>
+    </div>
+  </div>
+
+  <div class="painel">
+    <table>
+      <thead>
+        <tr><th>Etapa</th><th>Tabela</th><th>Coluna</th><th>Dimensao</th><th>Status</th><th>Violacoes</th><th>Total linhas</th></tr>
+      </thead>
+      <tbody>
+        <tr class="falhou">
+            <td>bruto</td><td>dengue_warehouse</td><td>sg_uf, nu_ano, dt_notific, cs_sexo</td>
+            <td>unicidade</td>
+            <td>FALHOU</td>
+            <td>16311057</td>
+            <td>16454345</td>
+        </tr>
+<tr class="falhou">
+            <td>pre_carga</td><td>dengue_warehouse</td><td>sg_uf, nu_ano, dt_notific, cs_sexo</td>
+            <td>unicidade</td>
+            <td>FALHOU</td>
+            <td>16311057</td>
+            <td>16454345</td>
+        </tr>
+<tr class="falhou">
+            <td>bruto</td><td>dengue_warehouse</td><td>ano_nasc</td>
+            <td>validade_dominio</td>
+            <td>FALHOU</td>
+            <td>2249210</td>
+            <td>16386049</td>
+        </tr>
+<tr class="falhou">
+            <td>bruto</td><td>dengue_warehouse</td><td>evolucao</td>
+            <td>validade_dominio</td>
+            <td>FALHOU</td>
+            <td>8531</td>
+            <td>13923775</td>
+        </tr>
+<tr class="ok">
+            <td>bruto</td><td>dengue_warehouse</td><td>cs_sexo</td>
+            <td>completude</td>
+            <td>OK</td>
+            <td>68</td>
+            <td>16454345</td>
+        </tr>
+<tr class="ok">
+            <td>bruto</td><td>dengue_warehouse</td><td>cs_sexo</td>
+            <td>validade_dominio</td>
+            <td>OK</td>
+            <td>0</td>
+            <td>16454277</td>
+        </tr>
+<tr class="ok">
+            <td>bruto</td><td>dengue_warehouse</td><td>hospitaliz</td>
+            <td>validade_dominio</td>
+            <td>OK</td>
+            <td>0</td>
+            <td>12092809</td>
+        </tr>
+<tr class="ok">
+            <td>pre_carga</td><td>dengue_warehouse</td><td>sg_uf</td>
+            <td>completude</td>
+            <td>OK</td>
+            <td>0</td>
+            <td>16454345</td>
+        </tr>
+<tr class="ok">
+            <td>pre_carga</td><td>dengue_warehouse</td><td>nu_ano</td>
+            <td>completude</td>
+            <td>OK</td>
+            <td>0</td>
+            <td>16454345</td>
+        </tr>
+<tr class="ok">
+            <td>pre_carga</td><td>dengue_warehouse</td><td>dt_notific</td>
+            <td>completude</td>
+            <td>OK</td>
+            <td>0</td>
+            <td>16454345</td>
+        </tr>
+<tr class="ok">
+            <td>pre_carga</td><td>dengue_warehouse</td><td>sg_uf</td>
+            <td>validade_dominio</td>
+            <td>OK</td>
+            <td>0</td>
+            <td>-</td>
+        </tr>
+<tr class="ok">
+            <td>pre_carga</td><td>dengue_warehouse</td><td>nu_ano</td>
+            <td>validade_range</td>
+            <td>OK</td>
+            <td>0</td>
+            <td>-</td>
+        </tr>
+<tr class="ok">
+            <td>pre_carga</td><td>dengue_warehouse</td><td>ano_nasc</td>
+            <td>validade_range</td>
+            <td>OK</td>
+            <td>0</td>
+            <td>-</td>
+        </tr>
+<tr class="ok">
+            <td>pos_carga</td><td>fato_dengue</td><td>sk_uf</td>
+            <td>completude</td>
+            <td>OK</td>
+            <td>0</td>
+            <td>16454345</td>
+        </tr>
+<tr class="ok">
+            <td>pos_carga</td><td>fato_dengue</td><td>sk_tempo_notific</td>
+            <td>completude</td>
+            <td>OK</td>
+            <td>0</td>
+            <td>16454345</td>
+        </tr>
+<tr class="ok">
+            <td>pos_carga</td><td>fato_dengue</td><td>sk_vitima</td>
+            <td>completude</td>
+            <td>OK</td>
+            <td>0</td>
+            <td>16454345</td>
+        </tr>
+<tr class="ok">
+            <td>pos_carga</td><td>dim_uf</td><td>populacao_uf</td>
+            <td>completude</td>
+            <td>OK</td>
+            <td>0</td>
+            <td>27</td>
+        </tr>
+<tr class="ok">
+            <td>pos_carga</td><td>dim_vitima</td><td>cs_sexo</td>
+            <td>validade_dominio</td>
+            <td>OK</td>
+            <td>0</td>
+            <td>-</td>
+        </tr>
+<tr class="ok">
+            <td>pos_carga</td><td>fato_dengue</td><td>evolucao</td>
+            <td>validade_dominio</td>
+            <td>OK</td>
+            <td>0</td>
+            <td>-</td>
+        </tr>
+<tr class="ok">
+            <td>pos_carga</td><td>fato_dengue</td><td>hospitaliz</td>
+            <td>validade_dominio</td>
+            <td>OK</td>
+            <td>0</td>
+            <td>-</td>
+        </tr>
+<tr class="ok">
+            <td>pos_carga</td><td>fato_dengue</td><td>nu_ano</td>
+            <td>validade_range</td>
+            <td>OK</td>
+            <td>0</td>
+            <td>-</td>
+        </tr>
+<tr class="ok">
+            <td>pos_carga</td><td>fato_dengue</td><td>ano_nasc</td>
+            <td>validade_range</td>
+            <td>OK</td>
+            <td>0</td>
+            <td>-</td>
+        </tr>
+<tr class="ok">
+            <td>pos_carga</td><td>dim_uf</td><td>(sg_uf)</td>
+            <td>unicidade</td>
+            <td>OK</td>
+            <td>0</td>
+            <td>27</td>
+        </tr>
+<tr class="ok">
+            <td>bruto</td><td>dengue_warehouse</td><td>sg_uf</td>
+            <td>completude</td>
+            <td>OK</td>
+            <td>0</td>
+            <td>16454345</td>
+        </tr>
+<tr class="ok">
+            <td>pos_carga</td><td>dim_tempo</td><td>(data_completa)</td>
+            <td>unicidade</td>
+            <td>OK</td>
+            <td>0</td>
+            <td>2789</td>
+        </tr>
+<tr class="ok">
+            <td>bruto</td><td>dengue_warehouse</td><td>nu_ano</td>
+            <td>completude</td>
+            <td>OK</td>
+            <td>0</td>
+            <td>16454345</td>
+        </tr>
+<tr class="ok">
+            <td>bruto</td><td>dengue_warehouse</td><td>dt_notific</td>
+            <td>completude</td>
+            <td>OK</td>
+            <td>0</td>
+            <td>16454345</td>
+        </tr>
+<tr class="ok">
+            <td>bruto</td><td>dengue_warehouse</td><td>sg_uf</td>
+            <td>validade_dominio</td>
+            <td>OK</td>
+            <td>0</td>
+            <td>16454345</td>
+        </tr>
+<tr class="ok">
+            <td>bruto</td><td>dengue_warehouse</td><td>nu_ano</td>
+            <td>validade_dominio</td>
+            <td>OK</td>
+            <td>0</td>
+            <td>16454345</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+<script>
+new Chart(document.getElementById('graficoEtapa'), {
+  type: 'bar',
+  data: {
+    labels: ["Bruto (SINAN)", "Pre-carga (limpo)", "Pos-carga (DW)"],
+    datasets: [{ label: 'Score de qualidade (%)', data: [72.7, 85.7, 100.0], backgroundColor: ['#dc2626', '#d97706', '#16a34a'] }]
+  },
+  options: { scales: { y: { beginAtZero:true, max:100 } }, plugins: { title: { display:true, text:'Bruto -> Pre-carga -> Pos-carga' } } }
+});
+
+new Chart(document.getElementById('graficoDimensao'), {
+  type: 'bar',
+  data: {
+    labels: ["unicidade", "validade_dominio", "completude", "validade_range"],
+    datasets: [{ label: '% aprovado por dimensao', data: [50.0, 80.0, 100.0, 100.0], backgroundColor: '#2563eb' }]
+  },
+  options: { scales: { y: { beginAtZero:true, max:100 } }, plugins: { title: { display:true, text:'Qualidade por dimensao' } } }
+});
+
+new Chart(document.getElementById('graficoStatus'), {
+  type: 'doughnut',
+  data: {
+    labels: ['Aprovados', 'Com violacao'],
+    datasets: [{ data: [25, 4], backgroundColor: ['#16a34a', '#dc2626'] }]
+  },
+  options: { plugins: { title: { display:true, text:'Status geral dos checks' } } }
+});
+</script>
+</body>
+</html>

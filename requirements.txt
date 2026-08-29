@@ -1,0 +1,47 @@
+# =========================================================
+# Dependencias do Pipeline Dengue + Governanca de Dados
+# =========================================================
+#
+# Instalar tudo de uma vez:
+#   pip install -r requirements.txt
+#
+# Pre-requisitos que NAO sao instalados via pip:
+#   - PostgreSQL 14+ (o banco em si, nao a lib Python)
+#   - Java + JAVA_HOME configurado (exigido pelo PySpark)
+#   - Google Chrome instalado (o Selenium controla o Chrome via
+#     webdriver-manager, mas o navegador em si precisa existir)
+#   - Hadoop local no Windows (winutils.exe) se for rodar PySpark
+#     no Windows -- ver HADOOP_HOME no topo do script
+
+
+# ---- nucleo: dados e banco ----
+pandas
+psycopg2-binary
+requests
+
+# ---- download e automacao de navegador (fonte IBGE) ----
+selenium
+webdriver-manager
+
+# ---- processamento distribuido (transformacao dos CSVs) ----
+pyspark
+
+# ---- leitura da planilha de populacao do IBGE (.xls / .xlsx) ----
+openpyxl
+xlrd
+
+# ---- barra de progresso ----
+tqdm
+
+# ---- geracao de PDF (dicionario de dados) ----
+reportlab
+
+# ---- documentacao automatica do codigo (site HTML via docstrings) ----
+pdoc
+
+# ---- diagrama de arquitetura em PNG ----
+matplotlib
+
+# ---- resumo executivo por IA (opcional -- so necessario se
+#      GENERATE_AI_SUMMARY = True no script) ----
+google-genai
